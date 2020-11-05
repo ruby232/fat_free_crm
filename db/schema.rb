@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_03_150431) do
+ActiveRecord::Schema.define(version: 2020_11_05_093100) do
 
   create_table "account_contacts", force: :cascade do |t|
     t.integer "account_id"
@@ -51,6 +51,13 @@ ActiveRecord::Schema.define(version: 2020_11_03_150431) do
     t.integer "opportunities_count", default: 0
     t.index ["assigned_to"], name: "index_accounts_on_assigned_to"
     t.index ["user_id", "name", "deleted_at"], name: "index_accounts_on_user_id_and_name_and_deleted_at", unique: true
+  end
+
+  create_table "actions", force: :cascade do |t|
+    t.integer "type", default: 0, null: false
+    t.string "name", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "activities", force: :cascade do |t|
@@ -383,6 +390,8 @@ ActiveRecord::Schema.define(version: 2020_11_03_150431) do
     t.datetime "updated_at"
     t.string "background_info"
     t.text "subscribed_users"
+    t.integer "action_id"
+    t.index ["action_id"], name: "index_tasks_on_action_id"
     t.index ["assigned_to"], name: "index_tasks_on_assigned_to"
     t.index ["user_id", "name", "deleted_at"], name: "index_tasks_on_user_id_and_name_and_deleted_at", unique: true
   end
