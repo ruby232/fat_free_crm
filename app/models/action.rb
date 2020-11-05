@@ -15,4 +15,5 @@
 #
 
 class Action < ApplicationRecord
+  enum type: { incidence: "incidence", useful: "useful" }
 end
