@@ -209,4 +209,6 @@ Rails.application.routes.draw do
     resources :settings, only: :index
     resources :plugins,  only: :index
   end
+
+  get 'campaigns/import' => 'campaigns#import_from_file', as: :campaign_import_form_file
 end

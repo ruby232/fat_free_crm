@@ -37,3 +37,5 @@ Design
 
 .passenger
 .vagrant
+
+docker-compose.override.yml

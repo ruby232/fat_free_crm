@@ -160,6 +160,24 @@ class CampaignsController < EntitiesController
     end
   end
 
+  # get /campaigns/import                                                 AJAX
+  #----------------------------------------------------------------------------
+  def import_from_file
+    @campaign = Campaign.new
+    @campaign.attributes = { user: current_user, access: Setting.default_access, assigned_to: nil }
+
+    if params[:related]
+      model, id = params[:related].split('_')
+      if related = model.classify.constantize.my(current_user).find_by_id(id)
+        instance_variable_set("@#{model}", related)
+      else
+        respond_to_related_not_found(model) && return
+      end
+    end
+
+    respond_with(@campaign)
+  end
+
   private
 
   #----------------------------------------------------------------------------

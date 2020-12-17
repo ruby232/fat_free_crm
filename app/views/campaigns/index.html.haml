@@ -2,7 +2,10 @@
 
 = render 'entities/title_bar'
 
+= link_to_inline("campaign_import_form_file".to_sym, send("campaign_import_form_file_path"), text: "Import form file")
+
 .remote#create_campaign{ hidden }
+.remote#campaign_import_form_file{ hidden }
 
 = render 'search'
 
