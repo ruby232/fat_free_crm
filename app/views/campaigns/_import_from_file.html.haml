@@ -1,18 +1,37 @@
-= simple_form_for(@campaign, html: one_submit_only, remote: true) do |f|
-  = link_to_close new_campaign_path
-  = f.hidden_field :user_id
+.remote
+  = form_for(@campaign, url: upload_file_path(@campaign, format: "js"), html: { multipart: true, target: "uploading") do |f|
+    = link_to_close new_campaign_path
+    -# todo
+    -#= error_messages_for :avatar, object: @user.avatar, object_name: t('avatar')
 
-  = f.error_messages object_name: t('campaign')
+    %p
+      %small 'Descripcion aqui'
 
-  = render "campaigns/top_section", f: f
-  = render "fields/edit_custom_field_group", f: f
-  = render "shared/add_comment", f: f
-  = render "campaigns/objectives",  f: f
-  = render "fields/groups",         f: f
-  = render "entities/permissions",  f: f, entity: @campaign
-  = hook(:entity_form, self, {f: f, entity: @campaign})
+    %div 'File':
+    = fields_for(Importer) do |a|
+      %div= a.file_field :file
 
-  .buttonbar
-    = f.submit t(:create_campaign)
-    #{t :or}
-    = link_to_cancel new_campaign_path
+    .buttonbar
+      = f.submit t(:upload_picture), id: "importer_file_submit"
+      #{t :or}
+      = link_to_cancel avatar_user_path(@user)
+%br
+-#= simple_form_for(@campaign, html: one_submit_only, remote: true) do |f|
+-#  = link_to_close new_campaign_path
+-#  = f.hidden_field :user_id
+-#
+-#  = f.error_messages object_name: t('campaign')
+-#
+-#  .section
+-#    %table
+-#      %tr
+-#        %td(colspan="5")
+-#          .label.top.req 'File':
+-#          = f.file_field :file, autofocus: true, style: "width:500px"
+-#
+-#  = hook(:entity_form, self, {f: f, entity: @campaign})
+-#
+-#  .buttonbar
+-#    = f.submit 'Import campaign'
+-#    #{t :or}
+-#    = link_to_cancel new_campaign_path
